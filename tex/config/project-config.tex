@@ -1,0 +1,35 @@
+\ExplSyntaxOn
+
+\tl_new:N \g_project_title_tl
+\tl_new:N \g_project_author_tl
+\tl_new:N \g_project_course_code_tl
+\tl_new:N \g_project_course_name_tl
+
+\keys_define:nn { project } {
+    title .tl_gset:N = \g_project_title_tl,
+    author .tl_gset:N = \g_project_author_tl,
+    course_code .tl_gset:N = \g_project_course_code_tl,
+    course_name .tl_gset:N = \g_project_course_name_tl
+}
+
+\NewDocumentCommand{\ProjectSetup}{m} { 
+    \keys_set:nn { project } { #1 } 
+}
+
+\NewDocumentCommand{\ProjectTitle}{}{ 
+    \tl_use:N \g_project_title_tl 
+}
+
+\NewDocumentCommand{\ProjectAuthor}{}{
+    \tl_use:N \g_project_author_tl
+}
+
+\NewDocumentCommand{\ProjectCourseCode}{}{
+    \tl_use:N \g_project_course_code_tl
+}
+
+\NewDocumentCommand{\ProjectCourseName}{}{
+    \tl_use:N \g_project_course_name_tl
+}
+
+\ExplSyntaxOff
