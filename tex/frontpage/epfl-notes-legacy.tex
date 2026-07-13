@@ -1,0 +1,36 @@
+\ExplSyntaxOn
+
+\cs_new_protected:cpn { fayorg_frontpage_epfl-notes-legacy: }
+  {
+    \hypersetup{pageanchor=false}
+    \begin{titlepage}
+      \centering
+
+      \textsc{\Huge École~Polytechnique\\[0.3cm]Fédérale~de~Lausanne}\\[0.7cm]
+      \includegraphics[scale=.11]{epfl_red}\\[1.5cm]
+
+      \center
+      \makebox[\textwidth][c]{\rule[0.2cm]{13cm}{0.1cm}} \\
+      { \huge \bfseries \ProjectCourseName }\\[0.4cm]
+      {\Large\slshape
+        Notes~taken~during~Prof.~\ProjectCourseInstructor's~lectures~at~EPFL~in~\ProjectCourseSemester.
+      }\\[0.4cm]
+      \makebox[\textwidth][c]{\rule[0.2cm]{13cm}{0.1cm}}\\[3cm]
+
+      \begin{minipage}{0.4\textwidth}
+        \normalsize\centering \ProjectAuthor\\
+      \end{minipage}\\
+      \begin{minipage}{0.4\textwidth}
+        \normalsize\centering \ProjectContext\\
+      \end{minipage}\\
+      \begin{minipage}{0.4\textwidth}
+        \normalsize\centering \ProjectDate\\
+      \end{minipage}\\
+      \ProjectGitHubHash
+
+      \newpage
+    \end{titlepage}
+    \hypersetup{pageanchor=true}
+  }
+
+\ExplSyntaxOff

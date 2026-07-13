@@ -3,6 +3,7 @@
 
 ### LaTeX ###
 build-version.tex
+fayorg-build-info.tex
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

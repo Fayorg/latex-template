@@ -1,15 +1,38 @@
 \ExplSyntaxOn
 
 \tl_new:N \g_project_title_tl
+\tl_new:N \g_project_subtitle_tl
 \tl_new:N \g_project_author_tl
+\tl_new:N \g_project_context_tl
+\tl_new:N \g_project_date_tl
+\tl_gset:Nn \g_project_date_tl { \today }
+
+% Course information
 \tl_new:N \g_project_course_code_tl
 \tl_new:N \g_project_course_name_tl
+\tl_new:N \g_project_course_semester_tl
+\tl_new:N \g_project_course_instructor_tl
 
 \keys_define:nn { project } {
     title .tl_gset:N = \g_project_title_tl,
+    subtitle .tl_gset:N = \g_project_subtitle_tl,
     author .tl_gset:N = \g_project_author_tl,
+    context .tl_gset:N = \g_project_context_tl,
+    date .tl_gset:N = \g_project_date_tl,
+
     course_code .tl_gset:N = \g_project_course_code_tl,
-    course_name .tl_gset:N = \g_project_course_name_tl
+    course-code .meta:n = { course_code = { #1 } },
+    course_name .tl_gset:N = \g_project_course_name_tl,
+    course-name .meta:n = { course_name = { #1 } },
+    course_semester .tl_gset:N = \g_project_course_semester_tl,
+    course-semester .meta:n = { course_semester = { #1 } },
+    course_instructor .tl_gset:N = \g_project_course_instructor_tl,
+    course-instructor .meta:n = { course_instructor = { #1 } },
+
+    % Style choices are accepted here for preamble-only compatibility.
+    theme .code:n = { \FayorgSetup { theme = { #1 } } },
+    profile .meta:n = { theme = { #1 } },
+    palette .code:n = { \FayorgSetup { palette = { #1 } } },
 }
 
 \NewDocumentCommand{\ProjectSetup}{m} { 
@@ -18,6 +41,10 @@
 
 \NewDocumentCommand{\ProjectTitle}{}{ 
     \tl_use:N \g_project_title_tl 
+}
+
+\NewDocumentCommand{\ProjectSubtitle}{}{
+    \tl_use:N \g_project_subtitle_tl
 }
 
 \NewDocumentCommand{\ProjectAuthor}{}{
@@ -30,6 +57,22 @@
 
 \NewDocumentCommand{\ProjectCourseName}{}{
     \tl_use:N \g_project_course_name_tl
+}
+
+\NewDocumentCommand{\ProjectCourseSemester}{}{
+    \tl_use:N \g_project_course_semester_tl
+}
+
+\NewDocumentCommand{\ProjectCourseInstructor}{}{
+    \tl_use:N \g_project_course_instructor_tl
+}
+
+\NewDocumentCommand{\ProjectContext}{}{
+    \tl_use:N \g_project_context_tl
+}
+
+\NewDocumentCommand{\ProjectDate}{}{
+    \tl_use:N \g_project_date_tl
 }
 
 \ExplSyntaxOff

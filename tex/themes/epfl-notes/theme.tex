@@ -1,0 +1,72 @@
+\ExplSyntaxOn
+
+\fayorg_declare_theme:nnn { epfl-notes } { bright } { bright,dark }
+
+\cs_new_protected:cpn { fayorg_theme_epfl-notes: }
+  {
+    \tcbset{
+      fayorg-component-base/.style={
+        enhanced,breakable,frame~hidden,boxrule=0pt,sharp~corners,
+        colback=FayorgSurface,coltext=FayorgForeground,
+        left=9pt,right=9pt,top=7pt,bottom=7pt,
+        before~skip=10pt,after~skip=10pt
+      },
+      fayorg-theorem/.style={
+        fayorg-component-base,
+        borderline~west={2.5pt}{0pt}{FayorgTheorem}
+      },
+      fayorg-definition/.style={
+        fayorg-component-base,
+        borderline~west={2.5pt}{0pt}{FayorgDefinition}
+      },
+      fayorg-example/.style={
+        fayorg-component-base,
+        borderline~west={2.5pt}{0pt}{FayorgExample}
+      },
+      fayorg-remark/.style={
+        fayorg-component-base,colback=FayorgSubtle,
+        borderline~west={1.5pt}{0pt}{FayorgRemark}
+      },
+      fayorg-exercise/.style={
+        fayorg-component-base,colback=FayorgNoteBackground,
+        borderline~west={2.5pt}{0pt}{FayorgNote}
+      },
+      fayorg-explanation/.style={
+        fayorg-component-base,
+        borderline~west={2.5pt}{0pt}{FayorgDefinition}
+      },
+      fayorg-answer/.style={
+        fayorg-component-base,
+        borderline~west={2.5pt}{0pt}{FayorgExample}
+      },
+      fayorg-conjecture/.style={
+        fayorg-component-base,
+        borderline~west={2.5pt}{0pt}{FayorgTheorem}
+      },
+      fayorg-note/.style={
+        enhanced,breakable,frame~hidden,boxrule=0pt,sharp~corners,
+        colback=FayorgNoteBackground,coltext=FayorgForeground,
+        borderline~west={3pt}{0pt}{FayorgNote},
+        fonttitle=\bfseries,coltitle=FayorgForeground,
+        colbacktitle=FayorgNoteBackground,
+        left=9pt,right=9pt,top=7pt,bottom=7pt,
+        before~skip=10pt,after~skip=10pt
+      },
+      fayorg-code/.style={
+        enhanced,breakable,sharp~corners,boxrule=.4pt,
+        colback=FayorgCodeBackground,colframe=FayorgCodeFrame,
+        coltext=FayorgForeground,left=5pt,right=5pt,top=5pt,bottom=5pt,
+        before~skip=10pt,after~skip=10pt
+      }
+    }
+    \lstdefinestyle{fayorg-code}{
+      basicstyle=\ttfamily\small\color{FayorgCodeText},
+      keywordstyle=\bfseries\color{FayorgCodeKeyword},
+      commentstyle=\itshape\color{FayorgCodeComment},
+      stringstyle=\color{FayorgCodeString},
+      showstringspaces=false,columns=fullflexible,keepspaces=true,
+      breaklines=true,tabsize=2
+    }
+  }
+
+\ExplSyntaxOff

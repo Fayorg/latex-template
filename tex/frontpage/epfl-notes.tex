@@ -1,0 +1,60 @@
+\ExplSyntaxOn
+
+\cs_new_protected:cpn { fayorg_frontpage_epfl-notes: }
+  {
+    \hypersetup{pageanchor=false}
+    \begin{titlepage}
+      \thispagestyle{empty}
+      \setlength{\parindent}{0pt}
+      \setlength{\fboxsep}{0pt}
+      \begin{center}
+        \includegraphics[scale=.11]{epfl_red}
+      \end{center}
+      \par
+
+      \vspace*{2.4cm}
+      \tl_if_empty:NF \g_project_course_code_tl
+        {
+          {\color{FayorgAccent}\bfseries\large
+            \tl_use:N \g_project_course_code_tl\par}
+          \vspace{0.45cm}
+        }
+
+      {\Huge\bfseries
+        \tl_use:N \g_project_title_tl\par}
+
+      \tl_if_empty:NF \g_project_course_name_tl
+        {
+          \vspace{0.7cm}
+          {\Large \tl_use:N \g_project_course_name_tl\par}
+        }
+      \tl_if_empty:NF \g_project_subtitle_tl
+        {
+          \vspace{0.45cm}
+          {\large\itshape \tl_use:N \g_project_subtitle_tl\par}
+        }
+
+      \vspace{1.2cm}
+      {\color{FayorgAccent}\rule{\textwidth}{1.2pt}\par}
+      \vspace{0.8cm}
+
+      \tl_if_empty:NF \g_project_course_instructor_tl
+        {Lectures~by~Prof.~\tl_use:N \g_project_course_instructor_tl\par}
+      \tl_if_empty:NF \g_project_course_semester_tl
+        {\tl_use:N \g_project_course_semester_tl\par}
+
+      \vfill
+      \begin{minipage}[b]{.64\textwidth}
+        \bfseries \ProjectAuthor\par
+        \normalfont \ProjectContext
+      \end{minipage}
+      \begin{minipage}[b]{.35\textwidth}
+        \raggedleft
+        \ProjectDate\par
+        \ProjectVersion
+      \end{minipage}
+    \end{titlepage}
+    \hypersetup{pageanchor=true}
+  }
+
+\ExplSyntaxOff

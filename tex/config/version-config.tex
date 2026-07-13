@@ -16,10 +16,10 @@
     \tl_if_empty:NTF \g_project_github_hash_tl
       {
         \tl_if_blank:nF { #1 }
-          { Version:~\texttt { #1 } \\ }
+          { Version:~\texttt { #1 } }
       }
       {
-        Version:~\texttt { \tl_range:Nnn \g_project_github_hash_tl { 1 } { 7 } } \\
+        Version:~\texttt { \tl_range:Nnn \g_project_github_hash_tl { 1 } { 7 } }
       }
   }
 
@@ -29,7 +29,19 @@
     githubhash .code:n = { \fayorg_project_set_github_hash:n { #1 } },
 }
 
+\keys_define:nn { fayorg / build } {
+    commit .code:n = { \fayorg_project_set_github_hash:n { #1 } },
+    github_hash .code:n = { \fayorg_project_set_github_hash:n { #1 } },
+    github-hash .code:n = { \fayorg_project_set_github_hash:n { #1 } },
+}
+
+\NewDocumentCommand{\FayorgBuildInfo}{m}
+  { \keys_set:nn { fayorg / build } { #1 } }
+
 \NewDocumentCommand{\ProjectGitHubHash}{}
+  { \tl_use:N \g_project_github_hash_tl }
+
+\NewDocumentCommand{\ProjectCommitHash}{}
   { \tl_use:N \g_project_github_hash_tl }
 
 \NewDocumentCommand{\ProjectVersion}{O{}}
@@ -37,4 +49,6 @@
 
 \ExplSyntaxOff
 
-\InputIfFileExists{build-version.tex}{}{}
+\InputIfFileExists{fayorg-build-info.tex}{}{
+  \InputIfFileExists{build-version.tex}{}{}
+}

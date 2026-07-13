@@ -1,12 +1,19 @@
-\documentclass{article}
+\documentclass[a4paper]{report}
 
-\usepackage{latex-fayorg-template}
+\usepackage[
+    theme = epfl-notes-legacy,
+    palette = dark
+]{latex-fayorg-template}
+
 \ProjectSetup{
     title = Notes Example,
-    author = Elie Baier,
+    subtitle = {A showcase of reusable note components},
+    author = Elie Baier (397222),
+    context = Computer Science Bachelor,
     course_code = CS-101,
-    course_name = {Advanced Information, Comunication and Computation I},
-    frontpage = epfl
+    course_name = {Advanced Information, Computation and Communication II},
+    course_semester = Spring 2026,
+    course_instructor = Christoph Gastpar
 }
 
 \begin{document}
@@ -14,4 +21,47 @@
 
     \section{Introduction}
     This is a simple example of a LaTeX document using \ProjectTitle (for \ProjectCourseCode, \ProjectCourseName) created by \ProjectAuthor.
+
+    \begin{theorem}[A useful theorem]
+        If $a=b$ and $b=c$, then $a=c$.
+    \end{theorem}
+
+    \begin{definition}[A reusable component]
+        A semantic component keeps its meaning while its appearance follows the active theme.
+    \end{definition}
+
+    \begin{example}
+        Select the personal theme without changing the contents of this environment.
+    \end{example}
+
+    \begin{remark}
+        Remarks are unnumbered in the legacy setup.
+    \end{remark}
+
+    \begin{exercise}[Short][Transitivity]
+        Prove the theorem above.
+        \Answer
+        Apply equality twice.
+    \end{exercise}
+
+    \begin{explanation}
+        This unnumbered proof-style box ends with the legacy marker.
+    \end{explanation}
+
+    \begin{conjecture}
+        The legacy component API can still evolve without changing old notes.
+    \end{conjecture}
+
+    \begin{answer}
+        Standalone answer boxes are also available.
+    \end{answer}
+
+    \begin{note}
+        Notes are unnumbered and intended for short callouts.
+    \end{note}
+
+    \begin{code}[language=Python]
+def short_commit(commit):
+    return commit[:7]
+    \end{code}
 \end{document}

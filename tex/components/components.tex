@@ -1,0 +1,143 @@
+% Components expose stable environments. Themes supply box styles and can
+% replace these font hooks before the environments are first used.
+\NewDocumentCommand{\FayorgTheoremHeadFont}{}{\bfseries}
+\NewDocumentCommand{\FayorgTheoremBodyFont}{}{\itshape}
+\NewDocumentCommand{\FayorgDefinitionHeadFont}{}{\bfseries}
+\NewDocumentCommand{\FayorgDefinitionBodyFont}{}{\normalfont}
+\NewDocumentCommand{\FayorgExampleHeadFont}{}{\bfseries}
+\NewDocumentCommand{\FayorgExampleBodyFont}{}{\normalfont}
+\NewDocumentCommand{\FayorgRemarkHeadFont}{}{\itshape}
+\NewDocumentCommand{\FayorgRemarkBodyFont}{}{\normalfont}
+\NewDocumentCommand{\FayorgExerciseHeadFont}{}{\bfseries}
+\NewDocumentCommand{\FayorgExerciseBodyFont}{}{\normalfont}
+\NewDocumentCommand{\FayorgExplanationHeadFont}{}{\bfseries}
+\NewDocumentCommand{\FayorgExplanationBodyFont}{}{\normalfont}
+\NewDocumentCommand{\FayorgAnswerHeadFont}{}{\bfseries}
+\NewDocumentCommand{\FayorgAnswerBodyFont}{}{\normalfont}
+\NewDocumentCommand{\FayorgConjectureHeadFont}{}{\bfseries}
+\NewDocumentCommand{\FayorgConjectureBodyFont}{}{\normalfont}
+
+\newtheoremstyle{fayorg-theorem}
+  {0pt}{0pt}{\FayorgTheoremBodyFont}{}
+  {\FayorgTheoremHeadFont}{.}{.5em}{}
+\newtheoremstyle{fayorg-definition}
+  {0pt}{0pt}{\FayorgDefinitionBodyFont}{}
+  {\FayorgDefinitionHeadFont}{.}{.5em}{}
+\newtheoremstyle{fayorg-example}
+  {0pt}{0pt}{\FayorgExampleBodyFont}{}
+  {\FayorgExampleHeadFont}{.}{.5em}{}
+\newtheoremstyle{fayorg-remark}
+  {0pt}{0pt}{\FayorgRemarkBodyFont}{}
+  {\FayorgRemarkHeadFont}{.}{.5em}{}
+\newtheoremstyle{fayorg-exercise}
+  {0pt}{0pt}{\FayorgExerciseBodyFont}{}
+  {\FayorgExerciseHeadFont}{.}{.5em}{}
+\newtheoremstyle{fayorg-explanation}
+  {0pt}{0pt}{\FayorgExplanationBodyFont}{}
+  {\FayorgExplanationHeadFont}{.}{.5em}{}
+\newtheoremstyle{fayorg-answer}
+  {0pt}{0pt}{\FayorgAnswerBodyFont}{}
+  {\FayorgAnswerHeadFont}{.}{.5em}{}
+\newtheoremstyle{fayorg-conjecture}
+  {0pt}{0pt}{\FayorgConjectureBodyFont}{}
+  {\FayorgConjectureHeadFont}{.}{.5em}{}
+
+\theoremstyle{fayorg-theorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{fayorg-definition}
+\newtheorem{fayorgdefinition}[theorem]{Definition}
+\newtheorem*{fayorgdefinitionstar}{Definition}
+
+\theoremstyle{fayorg-example}
+\newtheorem{example}[theorem]{Example}
+\newtheorem*{eg}{Example}
+
+\theoremstyle{fayorg-remark}
+\newtheorem*{remark}{Remark}
+
+\theoremstyle{fayorg-exercise}
+\newtheorem{fayorgexercise}{Exercise}[section]
+
+\theoremstyle{fayorg-explanation}
+\newtheorem*{fayorgexplanation}{Proof}
+
+\theoremstyle{fayorg-answer}
+\newtheorem*{answer}{Answer}
+
+\theoremstyle{fayorg-conjecture}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+% Definitions keep the legacy behavior of starting the body on a new line when
+% an optional name is supplied.
+\NewDocumentEnvironment{definition}{o}
+  {
+    \IfNoValueTF{#1}
+      {\begin{fayorgdefinition}}
+      {\begin{fayorgdefinition}[#1]\leavevmode\par\nobreak\smallskip}
+  }
+  {\end{fayorgdefinition}}
+
+\NewDocumentEnvironment{definition*}{o}
+  {
+    \IfNoValueTF{#1}
+      {\begin{fayorgdefinitionstar}}
+      {\begin{fayorgdefinitionstar}[#1]\leavevmode\par\nobreak\smallskip}
+  }
+  {\end{fayorgdefinitionstar}}
+
+% Exercise accepts an optional subtitle and an optional name. With one value it
+% is shown in italics; with two values they are combined as in the old setup.
+\NewDocumentEnvironment{exercise}{o o}
+  {
+    \IfNoValueTF{#1}
+      {\begin{fayorgexercise}}
+      {
+        \IfNoValueTF{#2}
+          {\begin{fayorgexercise}[\textit{#1}]\leavevmode\par\nobreak\smallskip}
+          {\begin{fayorgexercise}[#2, \textit{#1}]\leavevmode\par\nobreak\smallskip}
+      }
+  }
+  {\end{fayorgexercise}}
+
+\NewDocumentCommand{\Answer}{}
+  {
+    \par\vspace{\baselineskip}
+    {\FayorgExerciseHeadFont Answer:}\par\smallskip
+  }
+
+\NewDocumentEnvironment{explanation}{o}
+  {
+    \vspace{-10pt}\pushQED{\(\circledast\)}
+    \IfNoValueTF{#1}
+      {\begin{fayorgexplanation}}
+      {\begin{fayorgexplanation}[#1]}
+  }
+  {\null\hfill\popQED\end{fayorgexplanation}}
+
+\tcolorboxenvironment{theorem}{fayorg-theorem}
+\tcolorboxenvironment{lemma}{fayorg-theorem}
+\tcolorboxenvironment{proposition}{fayorg-theorem}
+\tcolorboxenvironment{corollary}{fayorg-theorem}
+\tcolorboxenvironment{fayorgdefinition}{fayorg-definition}
+\tcolorboxenvironment{fayorgdefinitionstar}{fayorg-definition}
+\tcolorboxenvironment{example}{fayorg-example}
+\tcolorboxenvironment{eg}{fayorg-example}
+\tcolorboxenvironment{remark}{fayorg-remark}
+\tcolorboxenvironment{fayorgexercise}{fayorg-exercise}
+\tcolorboxenvironment{fayorgexplanation}{fayorg-explanation}
+\tcolorboxenvironment{answer}{fayorg-answer}
+\tcolorboxenvironment{conjecture}{fayorg-conjecture}
+
+\newtcolorbox{note}[1][]{fayorg-note,title={Note},#1}
+
+% Options passed to code are listings options, for example
+% \begin{code}[language=Python].
+\newtcblisting{code}[1][]{
+  fayorg-code,
+  listing only,
+  listing options={style=fayorg-code,#1}
+}

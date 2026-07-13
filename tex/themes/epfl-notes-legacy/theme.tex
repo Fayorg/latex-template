@@ -1,0 +1,95 @@
+\ExplSyntaxOn
+
+\fayorg_declare_theme:nnn { epfl-notes-legacy } { bright } { bright,dark }
+
+\cs_new_protected:cpn { fayorg_theme_epfl-notes-legacy: }
+  {
+    % Reproduce the legacy thmtools/mdframed typography through the shared
+    % theorem hooks, avoiding a second conflicting theorem implementation.
+    \RenewDocumentCommand{\FayorgTheoremHeadFont}{}
+      {\bfseries\sffamily\color{FayorgTheoremHeader}}
+    \RenewDocumentCommand{\FayorgTheoremBodyFont}{}{\normalfont}
+    \RenewDocumentCommand{\FayorgDefinitionHeadFont}{}
+      {\bfseries\sffamily\color{FayorgDefinitionHeader}}
+    \RenewDocumentCommand{\FayorgDefinitionBodyFont}{}{\normalfont}
+    \RenewDocumentCommand{\FayorgExampleHeadFont}{}
+      {\bfseries\sffamily\color{FayorgExampleHeader}}
+    \RenewDocumentCommand{\FayorgExampleBodyFont}{}{\normalfont}
+    \RenewDocumentCommand{\FayorgRemarkHeadFont}{}
+      {\bfseries\sffamily\color{FayorgRemarkHeader}}
+    \RenewDocumentCommand{\FayorgRemarkBodyFont}{}{\normalfont}
+    \RenewDocumentCommand{\FayorgExerciseHeadFont}{}
+      {\bfseries\sffamily\color{FayorgExerciseHeader}}
+    \RenewDocumentCommand{\FayorgExerciseBodyFont}{}{\normalfont}
+    \RenewDocumentCommand{\FayorgExplanationHeadFont}{}
+      {\bfseries\sffamily\color{FayorgExplanationHeader}}
+    \RenewDocumentCommand{\FayorgExplanationBodyFont}{}{\normalfont}
+    \RenewDocumentCommand{\FayorgAnswerHeadFont}{}
+      {\bfseries\sffamily\color{FayorgAnswerHeader}}
+    \RenewDocumentCommand{\FayorgAnswerBodyFont}{}{\normalfont}
+    \RenewDocumentCommand{\FayorgConjectureHeadFont}{}
+      {\bfseries\sffamily\color{FayorgConjectureHeader}}
+    \RenewDocumentCommand{\FayorgConjectureBodyFont}{}{\normalfont}
+
+    \tcbset{
+      fayorg-legacy-base/.style={
+        enhanced,breakable,frame~hidden,boxrule=0pt,sharp~corners,
+        coltext=FayorgForeground,
+        left=8pt,right=8pt,top=7pt,bottom=7pt,
+        before~skip=10pt,after~skip=10pt
+      },
+      fayorg-theorem/.style={
+        fayorg-legacy-base,colback=FayorgTheoremBackground,
+        borderline~west={2pt}{0pt}{FayorgTheorem}
+      },
+      fayorg-definition/.style={
+        fayorg-legacy-base,arc=3pt,colback=FayorgDefinitionBackground,
+        borderline~west={2pt}{0pt}{FayorgDefinition}
+      },
+      fayorg-example/.style={
+        fayorg-legacy-base,colback=FayorgExampleBackground,
+        borderline~west={2pt}{0pt}{FayorgExample}
+      },
+      fayorg-remark/.style={
+        fayorg-legacy-base,colback=FayorgRemarkBackground,
+        borderline~west={2pt}{0pt}{FayorgRemark}
+      },
+      fayorg-exercise/.style={
+        fayorg-legacy-base,colback=FayorgExerciseBackground,
+        borderline~west={2pt}{0pt}{FayorgExercise}
+      },
+      fayorg-explanation/.style={
+        fayorg-legacy-base,colback=FayorgExplanationBackground,
+        borderline~west={2pt}{0pt}{FayorgExplanation}
+      },
+      fayorg-answer/.style={
+        fayorg-legacy-base,colback=FayorgAnswerBackground,
+        borderline~west={2pt}{0pt}{FayorgAnswer}
+      },
+      fayorg-conjecture/.style={
+        fayorg-legacy-base,colback=FayorgConjectureBackground,
+        borderline~west={2pt}{0pt}{FayorgConjecture}
+      },
+      fayorg-note/.style={
+        fayorg-legacy-base,colback=FayorgNoteBackground,
+        borderline~west={2pt}{0pt}{FayorgNote},
+        fonttitle=\bfseries\sffamily,coltitle=FayorgNoteHeader,
+        colbacktitle=FayorgNoteBackground
+      },
+      fayorg-code/.style={
+        fayorg-legacy-base,colback=FayorgCodeBackground,
+        borderline~west={2pt}{0pt}{FayorgCodeFrame},
+        left=5pt,right=5pt,top=5pt,bottom=5pt
+      }
+    }
+    \lstdefinestyle{fayorg-code}{
+      basicstyle=\ttfamily\small\color{FayorgCodeText},
+      keywordstyle=\bfseries\color{FayorgCodeKeyword},
+      commentstyle=\itshape\color{FayorgCodeComment},
+      stringstyle=\color{FayorgCodeString},
+      showstringspaces=false,columns=fullflexible,keepspaces=true,
+      breaklines=true,tabsize=2
+    }
+  }
+
+\ExplSyntaxOff

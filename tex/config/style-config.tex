@@ -1,0 +1,153 @@
+\ExplSyntaxOn
+
+\tl_new:N \g_fayorg_theme_tl
+\tl_new:N \g_fayorg_palette_request_tl
+\tl_new:N \g_fayorg_palette_tl
+\bool_new:N \g_fayorg_style_resolved_bool
+
+\prop_new:N \g_fayorg_theme_palette_prop
+\prop_new:N \g_fayorg_theme_palettes_prop
+
+\tl_gset:Nn \g_fayorg_theme_tl { epfl-notes }
+
+\msg_new:nnnn { fayorg } { unknown-theme }
+  { Unknown~Fayorg~theme~'#1'. }
+  {
+    Available~themes~are~epfl-notes,~epfl-notes-legacy,~and
+    ~personal-notes.
+  }
+\msg_new:nnnn { fayorg } { unknown-palette }
+  {
+    Palette~'#2'~is~not~available~for~theme~'#1';
+    ~available~palettes:~#3.
+  }
+  { Palettes~are~owned~and~registered~by~their~theme. }
+\msg_new:nnnn { fayorg } { missing-frontpage }
+  { Theme~'#1'~does~not~provide~a~frontpage~renderer. }
+  { Every~Fayorg~theme~must~own~exactly~one~frontpage. }
+\msg_new:nnnn { fayorg } { setup-too-late }
+  { Fayorg~style~configuration~was~changed~after~it~was~resolved. }
+  { Put~\token_to_str:N \FayorgSetup~in~the~preamble. }
+
+% #1 theme, #2 default palette, #3 comma-separated palettes owned by it.
+\cs_new_protected:Npn \fayorg_declare_theme:nnn #1#2#3
+  {
+    \prop_gput:Nnn \g_fayorg_theme_palette_prop { #1 } { #2 }
+    \prop_gput:Nnn \g_fayorg_theme_palettes_prop { #1 } { #3 }
+  }
+
+\cs_new_protected:Npn \fayorg_style_set_theme:n #1
+  {
+    \str_case:nnF { #1 }
+      {
+        { epfl }        { \tl_gset:Nn \g_fayorg_theme_tl { epfl-notes } }
+        { epfl-legacy } { \tl_gset:Nn \g_fayorg_theme_tl { epfl-notes-legacy } }
+        { personal }    { \tl_gset:Nn \g_fayorg_theme_tl { personal-notes } }
+      }
+      { \tl_gset:Nn \g_fayorg_theme_tl { #1 } }
+  }
+
+\cs_new_protected:Npn \fayorg_style_set_palette:n #1
+  {
+    \str_if_eq:nnTF { #1 } { light }
+      { \tl_gset:Nn \g_fayorg_palette_request_tl { bright } }
+      { \tl_gset:Nn \g_fayorg_palette_request_tl { #1 } }
+  }
+
+\keys_define:nn { fayorg }
+  {
+    theme .code:n = { \fayorg_style_set_theme:n { #1 } },
+    palette .code:n = { \fayorg_style_set_palette:n { #1 } },
+    profile .meta:n = { theme = { #1 } },
+  }
+
+\NewDocumentCommand{\FayorgSetup}{m}
+  {
+    \bool_if:NTF \g_fayorg_style_resolved_bool
+      { \msg_error:nn { fayorg } { setup-too-late } }
+      { \keys_set:nn { fayorg } { #1 } }
+  }
+
+\cs_new_protected:Npn \fayorg_style_resolve:
+  {
+    \bool_if:NF \g_fayorg_style_resolved_bool
+      {
+        \prop_get:NVNTF \g_fayorg_theme_palette_prop
+          \g_fayorg_theme_tl \l_tmpa_tl
+          { }
+          {
+            \msg_error:nnx { fayorg } { unknown-theme }
+              { \tl_use:N \g_fayorg_theme_tl }
+            \tl_gset:Nn \g_fayorg_theme_tl { epfl-notes }
+            \prop_get:NnN \g_fayorg_theme_palette_prop
+              { epfl-notes } \l_tmpa_tl
+          }
+
+        \tl_if_blank:VTF \g_fayorg_palette_request_tl
+          { \tl_gset_eq:NN \g_fayorg_palette_tl \l_tmpa_tl }
+          { \tl_gset_eq:NN \g_fayorg_palette_tl \g_fayorg_palette_request_tl }
+
+        \cs_if_exist:cTF
+          { fayorg_theme_\tl_use:N \g_fayorg_theme_tl : }
+          { \use:c { fayorg_theme_\tl_use:N \g_fayorg_theme_tl : } }
+          {
+            \msg_error:nnx { fayorg } { unknown-theme }
+              { \tl_use:N \g_fayorg_theme_tl }
+          }
+
+        \cs_if_exist:cTF
+          {
+            fayorg_palette_\tl_use:N \g_fayorg_theme_tl
+            _\tl_use:N \g_fayorg_palette_tl :
+          }
+          {
+            \use:c
+              {
+                fayorg_palette_\tl_use:N \g_fayorg_theme_tl
+                _\tl_use:N \g_fayorg_palette_tl :
+              }
+          }
+          {
+            \prop_get:NVN \g_fayorg_theme_palettes_prop
+              \g_fayorg_theme_tl \l_tmpb_tl
+            \msg_error:nnxxx { fayorg } { unknown-palette }
+              { \tl_use:N \g_fayorg_theme_tl }
+              { \tl_use:N \g_fayorg_palette_tl }
+              { \tl_use:N \l_tmpb_tl }
+          }
+
+        \cs_if_exist:cF
+          { fayorg_frontpage_\tl_use:N \g_fayorg_theme_tl : }
+          {
+            \msg_error:nnx { fayorg } { missing-frontpage }
+              { \tl_use:N \g_fayorg_theme_tl }
+          }
+
+        \pagecolor{FayorgBackground}
+        \color{FayorgForeground}
+        \hypersetup{
+          linkcolor=FayorgLink,
+          citecolor=FayorgLink,
+          urlcolor=FayorgLink
+        }
+        % Standard LaTeX page styles otherwise reset page numbers to black.
+        \patchcmd{\@oddfoot}{\thepage}
+          {{\color{FayorgForeground}\thepage}}{}{}
+        \patchcmd{\@evenfoot}{\thepage}
+          {{\color{FayorgForeground}\thepage}}{}{}
+        \patchcmd{\ps@plain}{\thepage}
+          {{\color{FayorgForeground}\thepage}}{}{}
+        \bool_gset_true:N \g_fayorg_style_resolved_bool
+      }
+  }
+
+\NewExpandableDocumentCommand{\FayorgTheme}{}
+  { \tl_use:N \g_fayorg_theme_tl }
+\NewExpandableDocumentCommand{\FayorgProfile}{}
+  { \tl_use:N \g_fayorg_theme_tl }
+\NewExpandableDocumentCommand{\FayorgPalette}{}
+  { \tl_use:N \g_fayorg_palette_tl }
+
+\AtBeginDocument{\fayorg_style_resolve:}
+
+\ExplSyntaxOff

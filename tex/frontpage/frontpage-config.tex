@@ -1,32 +1,12 @@
 \ExplSyntaxOn
 
-\tl_new:N \g_project_frontpage_tl
-\tl_gset:Nn \g_project_frontpage_tl { default }
-
-\cs_new_protected:Npn \fayorg_project_set_frontpage:n #1
-  {
-    \str_case:nnF { #1 }
-      {
-        { default } { \tl_gset:Nn \g_project_frontpage_tl { default } }
-        { none }    { \tl_gset:Nn \g_project_frontpage_tl { default } }
-        { epfl }    { \tl_gset:Nn \g_project_frontpage_tl { epfl } }
-      }
-      {
-        \PackageError{latex-fayorg-template}
-          { Unknown~frontpage~`#1' }
-          { Choose~one~of:~default,~epfl,~none. }
-      }
-  }
-
-\keys_define:nn { project } {
-    frontpage .code:n = { \fayorg_project_set_frontpage:n { #1 } },
-}
-
 \cs_new_protected:Npn \fayorg_project_make_frontpage:
   {
-    \tl_if_eq:NnF \g_project_frontpage_tl { default }
+    \fayorg_style_resolve:
+    \cs_if_exist:cT
+      { fayorg_frontpage_\tl_use:N \g_fayorg_theme_tl : }
       {
-        \exp_args:Nx \input { frontpage/\tl_use:N \g_project_frontpage_tl.tex }
+        \use:c { fayorg_frontpage_\tl_use:N \g_fayorg_theme_tl : }
       }
   }
 

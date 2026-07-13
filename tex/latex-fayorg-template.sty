@@ -1,10 +1,42 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{latex-fayorg-template}[2026/07/11 Fayorg LaTeX template entry point]
+\ProvidesPackage{latex-fayorg-template}[2026/07/13 Fayorg LaTeX document system]
 
-% Package imports
-\RequirePackage{graphicx} % For including images
+% Dependencies shared by every theme. Theme files only configure these
+% packages; they do not load dependencies at begin-document time.
+\RequirePackage{l3keys2e}
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{amsmath}
+\RequirePackage{amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{listings}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{breakable,listings,skins}
+\RequirePackage[colorlinks=true]{hyperref}
 
-% Internal template modules. These are plain TeX files, not public packages.
+% Public configuration and registries.
+\input{config/style-config.tex}
 \input{config/project-config.tex}
 \input{config/version-config.tex}
+
+% Each theme owns its palettes, components and single frontpage renderer.
+\input{themes/epfl-notes/theme.tex}
+\input{themes/epfl-notes/palette-bright.tex}
+\input{themes/epfl-notes/palette-dark.tex}
+\input{themes/epfl-notes-legacy/theme.tex}
+\input{themes/epfl-notes-legacy/palette-bright.tex}
+\input{themes/epfl-notes-legacy/palette-dark.tex}
+\input{themes/personal-notes/theme.tex}
+\input{themes/personal-notes/palette-bright.tex}
+\input{themes/personal-notes/palette-dark.tex}
+
+% Semantic document components and frontpage renderers.
+\input{components/components.tex}
+\input{frontpage/epfl-notes.tex}
+\input{frontpage/epfl-notes-legacy.tex}
+\input{frontpage/personal-notes.tex}
 \input{frontpage/frontpage-config.tex}
+
+% Package options use the same keys as \FayorgSetup.
+\ProcessKeyOptions[fayorg]

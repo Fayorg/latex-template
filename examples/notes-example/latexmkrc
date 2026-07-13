@@ -1,1 +1,1 @@
-$ENV{'TEXINPUTS'} = '../../tex//:' . ($ENV{'TEXINPUTS'} || '');
+$ENV{'TEXINPUTS'} = '../../tex//:../../resources//:' . ($ENV{'TEXINPUTS'} || '');

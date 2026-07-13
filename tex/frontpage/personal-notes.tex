@@ -1,0 +1,39 @@
+\ExplSyntaxOn
+
+\cs_new_protected:cpn { fayorg_frontpage_personal-notes: }
+  {
+    \hypersetup{pageanchor=false}
+    \begin{titlepage}
+      \thispagestyle{empty}
+      \setlength{\parindent}{0pt}
+      \vspace*{1.4cm}
+      {\color{FayorgAccent}\rule{3.3cm}{4pt}\par}
+      \vspace{2.0cm}
+
+      {\Huge\bfseries
+        \tl_use:N \g_project_title_tl\par}
+      \tl_if_empty:NF \g_project_subtitle_tl
+        {
+          \vspace{0.65cm}
+          {\Large\color{FayorgRemark}
+            \tl_use:N \g_project_subtitle_tl\par}
+        }
+
+      \vspace{1.4cm}
+      \tl_if_empty:NF \g_project_course_name_tl
+        {{\large \tl_use:N \g_project_course_name_tl\par}}
+      \tl_if_empty:NF \g_project_course_code_tl
+        {{\color{FayorgAccent}\bfseries
+          \tl_use:N \g_project_course_code_tl\par}}
+
+      \vfill
+      {\large\bfseries \ProjectAuthor\par}
+      \ProjectContext\par
+      \vspace{0.7cm}
+      \ProjectDate\par
+      \ProjectVersion
+    \end{titlepage}
+    \hypersetup{pageanchor=true}
+  }
+
+\ExplSyntaxOff
